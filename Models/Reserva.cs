@@ -2,7 +2,7 @@ namespace DesafioProjetoHospedagem.Models
 {
     public class Reserva
     {
-        public List<Pessoa> Hospedes { get; set; }
+        public List<Pessoa> Hospedes { get; set; } = new List<Pessoa>();
         public Suite Suite { get; set; }
         public int DiasReservados { get; set; }
 
@@ -37,14 +37,19 @@ namespace DesafioProjetoHospedagem.Models
 
         public decimal CalcularValorDiaria()
         {
-            decimal valor = DiasReservados * Suite.ValorDiaria;
-
-            if (DiasReservados >= 10)
+            if (Suite != null)
             {
-                valor *= 0.9M;
+                decimal valor = DiasReservados * Suite.ValorDiaria;
+
+                if (DiasReservados >= 10)
+                {
+                    valor *= 0.9M;
+                }
+
+                return valor;
             }
 
-            return valor;
+            throw new NullReferenceException("Nenhuma suíte foi atribuída à essa reserva");
         }
     }
 }
